@@ -36,7 +36,6 @@ class Gui:
 
         self.attempts = []
 
-
     def submit(self) -> None:
         """
         Carries out 4 main functions of the submit button. 1st it checks the name and number of grades.
@@ -49,7 +48,7 @@ class Gui:
         try:
             #Submit number of attempts and name
             name = self.name_input.get()
-            name_contains_num = any(char.isdigit() for char in name) #Looked up how to
+            name_contains_num = any(char.isdigit() for char in name) #Looked up to ensure names don't contain numbers
             if name == "" or (not self.attempts_input.get().isnumeric()) or name_contains_num:
                 raise ValueError
             num_attempts = int(self.attempts_input.get())
@@ -99,20 +98,20 @@ class Gui:
 
                 #Exception handling for grades
                 except ValueError:
-                    self.submit_label.config(text = "Enter valid numbers")
+                    self.submit_label.config(text = "Enter valid numbers", fg = 'red')
                     if num_attempts > 0 and (self.attempts[0] < 0 or self.attempts[0] > 100 ):
-                        self.grade1_error.config(text = "       Enter a valid number for Grade 1 (0-100)")
+                        self.grade1_error.config(text = "       Enter a valid number for Grade 1 (0-100)", fg = 'red')
                     if num_attempts > 1 and (self.attempts[1] < 0 or self.attempts[1] > 100):
-                        self.grade2_error.config(text = "       Enter a valid number for Grade 2 (0-100)")
+                        self.grade2_error.config(text = "       Enter a valid number for Grade 2 (0-100)", fg = 'red')
                     if num_attempts > 2 and (self.attempts[2] < 0 or self.attempts[2] > 100 ):
-                        self.grade3_error.config(text = "       Enter a valid number for Grade 3 (0-100)")
+                        self.grade3_error.config(text = "       Enter a valid number for Grade 3 (0-100)", fg = 'red')
                     if num_attempts > 3 and (self.attempts[3] < 0 or self.attempts[3] > 100):
-                        self.grade4_error.config(text = "       Enter a valid number for Grade 4 (0-100)")
+                        self.grade4_error.config(text = "       Enter a valid number for Grade 4 (0-100)", fg = 'red')
 
         #Exception handling for the name and attempt submissions
         except ValueError:
             if (self.name_input.get() == "" or self.attempts_input.get() == "" or
-                    not self.attempts_input.get().isnumeric()):
+                    not self.attempts_input.get().isnumeric()) or name_contains_num:
                 self.submit_label.config(text = "Enter correct inputs for name and attempts (1-4)", fg = 'red')
             elif self.attempts_input.get().isnumeric() and (0 > int(self.attempts_input.get()) or int(self.attempts_input.get()) > 4):
                 self.submit_label.config(text = "Enter a number (1-4)", fg='red')

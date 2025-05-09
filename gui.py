@@ -114,7 +114,7 @@ class Gui:
             if (self.name_input.get() == "" or self.attempts_input.get() == "" or
                     not self.attempts_input.get().isnumeric()) or name_contains_num:
                 self.submit_label.config(text = "Enter correct inputs for name and attempts (1-4)", fg = 'red')
-            elif self.attempts_input.get().isnumeric() and (0 > int(self.attempts_input.get()) or int(self.attempts_input.get()) > 4):
+            if self.attempts_input.get().isnumeric() and (1 > int(self.attempts_input.get()) or int(self.attempts_input.get()) > 4):
                 self.submit_label.config(text = "Enter a number (1-4)", fg='red')
             elif name_in_grades:
                 self.submit_label.config(text="Name already in grades", fg='red')

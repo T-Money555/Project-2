@@ -49,7 +49,8 @@ class Gui:
             #Submit number of attempts and name
             name = self.name_input.get()
             name_contains_num = any(char.isdigit() for char in name) #Looked up to ensure names don't contain numbers
-            if name == "" or (not self.attempts_input.get().isnumeric()) or name_contains_num:
+            name_in_grades = self.check_names(name)
+            if name == "" or (not self.attempts_input.get().isnumeric()) or name_contains_num or name_in_grades:
                 raise ValueError
             num_attempts = int(self.attempts_input.get())
             if self.__submit_pressed == 0:
@@ -115,6 +116,18 @@ class Gui:
                 self.submit_label.config(text = "Enter correct inputs for name and attempts (1-4)", fg = 'red')
             elif self.attempts_input.get().isnumeric() and (0 > int(self.attempts_input.get()) or int(self.attempts_input.get()) > 4):
                 self.submit_label.config(text = "Enter a number (1-4)", fg='red')
+            elif name_in_grades:
+                self.submit_label.config(text="Name already in grades", fg='red')
+
+    def check_names(self, name):
+        with open ('grades.csv', 'r', newline ="\n") as csvfile:
+            match_name = csv.reader(csvfile)
+            for line in match_name:
+                print(line[0])
+                if line[0] == name:
+
+                    return True
+            return False
 
     def average(self, attempts) -> float:
         """

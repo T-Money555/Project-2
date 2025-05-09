@@ -123,7 +123,6 @@ class Gui:
         with open ('grades.csv', 'r', newline ="\n") as csvfile:
             match_name = csv.reader(csvfile)
             for line in match_name:
-                print(line[0])
                 if line[0] == name:
 
                     return True
